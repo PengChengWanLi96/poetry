@@ -21,6 +21,6 @@ public class UserController {
     @GetMapping("/users")
     @Operation(summary = "用户列表", description = "返回用户列表消息")
     public Object getUserList() {
-        return Arrays.asList("111");
+        return Arrays.asList("666");
     }
 }
