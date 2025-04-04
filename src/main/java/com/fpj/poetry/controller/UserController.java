@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-@Tag(name = "示例接口", description = "演示 Swagger 注解用法")
+@Tag(name = "用户模块", description = "用户模块接口")
 public class UserController {
 
     private com.fpj.poetry.service.UserService userService;

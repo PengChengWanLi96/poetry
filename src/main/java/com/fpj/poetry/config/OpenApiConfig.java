@@ -37,8 +37,10 @@ public class OpenApiConfig {
         String serverIp = IPUtil.getServerIP();
         String swaggerUrl = String.format("http://%s:%s/swagger-ui.html", serverIp, port);
         String openApiUrl = String.format("http://%s:%s/v3/api-docs", serverIp, port);
-        log.info("swagger url: {}", swaggerUrl);
-        log.info("openAPI url: {}", openApiUrl);
+        String knife4jUrl = String.format("http://%s:%s/doc.html", serverIp, port);
+        log.info("swagger doc url: {}", swaggerUrl);
+        log.info("openAPI doc url: {}", openApiUrl);
+        log.info("knife4j doc url: {}", knife4jUrl);
     }
 
     // 自定义安全方案（如 JWT）
