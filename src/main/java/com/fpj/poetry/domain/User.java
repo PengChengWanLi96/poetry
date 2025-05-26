@@ -1,8 +1,6 @@
 package com.fpj.poetry.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -13,8 +11,6 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
  * @date 2025/3/30
  */
 @Data
-@lombok.Getter
-@lombok.Setter
 @Document(indexName = "users", createIndex = true)
 public class User {
     @Id
