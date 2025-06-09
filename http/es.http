@@ -1,0 +1,47 @@
+### es 状态
+GET http://{{es_ip}}:{{es_port}}/_cat/health
+#Accept: application/json
+Authorization: Basic {{es_basic_auth}}
+
+### es 索引列表
+GET http://{{es_ip}}:{{es_port}}/_cat/indices
+Authorization: Basic {{es_basic_auth}}
+
+### es 索引列表，根据索引doc数量倒序排序
+GET http://{{es_ip}}:{{es_port}}/_cat/indices?v&h=index,docs.count,store.size,status&s=docs.count:desc
+Authorization: Basic {{es_basic_auth}}
+
+### es 索引列表，根据索引存储大小倒序排序
+GET http://{{es_ip}}:{{es_port}}/_cat/indices?v&h=index,docs.count,store.size,status&s=store.size:desc
+Authorization: Basic {{es_basic_auth}}
+
+### es 索引列表，根据索引创建时间倒序排序
+GET http://{{es_ip}}:{{es_port}}/_cat/indices?v&h=index,docs.count,store.size,status&s=creation.date:desc
+Authorization: Basic {{es_basic_auth}}
+
+### es 删除索引
+# curl -X DELETE -u elastic:Cosmic@2020 "http://localhost:9200/test_index"
+DELETE http://{{es_ip}}:{{es_port}}/{index}
+Authorization: Basic {{es_basic_auth}}
+
+
+### 查询es索引文档数据(通过设置size可以查询多条日志数据)
+#GET http://{{es_ip}}:{{es_port}}/users/_doc/_search?pretty   es6.X写法
+#GET http://{{es_ip}}:{{es_port}}/users/_doc/_search?pretty   es7.X写法
+# 当前为es8.x写法
+GET http://{{es_ip}}:{{es_port}}/users/_search?pretty
+Authorization: Basic elastic Cosmic@2020
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  },
+  "size": 10
+}
+
+
+### es 删除索引文档
+# curl -X DELETE -u elastic:Cosmic@2020 "http://localhost:9200/test_index"
+DELETE http://{{es_ip}}:{{es_port}}/{idnex}/doc/logdata-aump-system_plain-20231031170500
+Authorization: Basic {{es_basic_auth}}
