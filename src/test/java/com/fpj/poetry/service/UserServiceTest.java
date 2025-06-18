@@ -48,4 +48,21 @@ class UserServiceTest {
     void deleteAllUsers() {
         Boolean deleted = userService.deleteAllUsers();
     }
+
+    @Test
+    void deleteUserById() {
+        User user = new User(
+                "删除用户测试",
+                "删除用户测试",
+                "123456",
+                "北京市海淀区",
+                "zhangsan@example.com",
+                "13800138000"
+        );
+
+        String userId = userService.createUser(user);
+        assertNotNull(userId);
+        Boolean deleted = userService.deleteUserById(userId);
+        assertEquals(deleted, Boolean.TRUE);
+    }
 }

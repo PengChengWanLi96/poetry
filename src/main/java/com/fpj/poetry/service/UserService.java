@@ -7,6 +7,7 @@ import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.RefreshPolicy;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class UserService {
@@ -33,6 +34,11 @@ public class UserService {
         return Boolean.TRUE;
     }
 
+    // 使用Repository根据ID查询
+    public User findById(String id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
     // 根据邮箱查询
     public List<User> getByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -48,6 +54,53 @@ public class UserService {
                                 .field("address")
                                 .query(addressKeyword)
                         )
+                )
+                .build();
+
+        return elasticsearchOperations.search(query, User.class)
+                .stream()
+                .map(hit -> hit.getContent())
+                .toList();
+    }
+
+    public List<User> seaarchAllUserList(User user) {
+        // 构建动态查询
+        var query = new NativeQueryBuilder()
+                .withQuery(q -> q
+                        .bool(b -> {
+                            // 动态添加各个字段的匹配条件
+                            if (StringUtils.hasText(user.getName())) {
+                                b.must(m -> m.match(mt -> mt
+                                        .field("name")
+                                        .query(user.getName())
+                                ));
+                            }
+                            if (StringUtils.hasText(user.getNickname())) {
+                                b.must(m -> m.match(mt -> mt
+                                        .field("nickname")
+                                        .query(user.getNickname())
+                                ));
+                            }
+                            if (StringUtils.hasText(user.getAddress())) {
+                                b.must(m -> m.match(mt -> mt
+                                        .field("address")
+                                        .query(user.getAddress())
+                                ));
+                            }
+                            if (StringUtils.hasText(user.getEmail())) {
+                                b.must(m -> m.match(mt -> mt
+                                        .field("email")
+                                        .query(user.getEmail())
+                                ));
+                            }
+                            if (StringUtils.hasText(user.getPhone())) {
+                                b.must(m -> m.match(mt -> mt
+                                        .field("phone")
+                                        .query(user.getPhone())
+                                ));
+                            }
+                            return b;
+                        })
                 )
                 .build();
 
