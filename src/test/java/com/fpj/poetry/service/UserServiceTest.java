@@ -29,9 +29,16 @@ class UserServiceTest {
         assertNotNull(userId);
 
         // 验证邮箱查询
-        List<User> results = userService.getByEmail("zhangsan@example.com");
-        assertEquals(1, results.size());
-        assertEquals("北京市海淀区", results.get(0).getAddress());
+        User user1 = userService.getById(userId);
+        assertEquals(1, user1 != null ? 1: 0);
+        assertEquals("张三", user1.getName());
+        System.out.printf("", user1);
+    }
+
+    @Test
+    void getAllUsers() {
+        List<User> userList = userService.getUserList(null);
+        userList.forEach(System.out::println);
     }
 
     

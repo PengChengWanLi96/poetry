@@ -43,7 +43,7 @@ public class UserController {
             @Parameter(name = "nickname", description = "昵称", required = false),
             @Parameter(name = "address", description = "地址", required = false)})
     public List<User> getUserList(User user) {
-        return userService.seaarchAllUserList(user);
+        return userService.getUserList(user);
     }
 
     @GetMapping("/{id}")
@@ -51,7 +51,7 @@ public class UserController {
     public User getUserById(
             @Parameter(description = "用户ID", required = true, example = "u123")
             @PathVariable String id) {
-        return userService.findById(id);
+        return userService.getById(id);
     }
 
     @DeleteMapping("/{id}")

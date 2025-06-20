@@ -1,0 +1,4 @@
+### 用户列表
+GET http://{{server_port}}/users
+#Accept: application/json
+Authorization: Basic {{es_basic_auth}}

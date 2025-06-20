@@ -35,7 +35,7 @@ public class UserService {
     }
 
     // 使用Repository根据ID查询
-    public User findById(String id) {
+    public User getById(String id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -63,11 +63,14 @@ public class UserService {
                 .toList();
     }
 
-    public List<User> seaarchAllUserList(User user) {
+    public List<User> getUserList(User user) {
         // 构建动态查询
         var query = new NativeQueryBuilder()
                 .withQuery(q -> q
                         .bool(b -> {
+                            if (user == null) {
+                                return b;
+                            }
                             // 动态添加各个字段的匹配条件
                             if (StringUtils.hasText(user.getName())) {
                                 b.must(m -> m.match(mt -> mt
