@@ -33,7 +33,7 @@ public class OpenApiConfig {
     private String port;
 
     @PostConstruct
-    public void printSwagger(){
+    public void printSwagger() {
         String serverIp = IPUtil.getServerIP();
         String swaggerUrl = String.format("http://%s:%s/swagger-ui.html", serverIp, port);
         String openApiUrl = String.format("http://%s:%s/v3/api-docs", serverIp, port);
