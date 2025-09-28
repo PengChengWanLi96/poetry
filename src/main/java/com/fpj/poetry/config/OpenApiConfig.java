@@ -8,6 +8,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import jakarta.annotation.PostConstruct;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +42,7 @@ public class OpenApiConfig {
         log.info("swagger doc url: {}", swaggerUrl);
         log.info("openAPI doc url: {}", openApiUrl);
         log.info("knife4j doc url: {}", knife4jUrl);
+        List.of(11,22);
     }
 
     // 自定义安全方案（如 JWT）
