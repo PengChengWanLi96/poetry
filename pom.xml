@@ -124,7 +124,7 @@
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <!-- 生成版本信息文件名 -->
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-                    <format>json</format>
+                    <format>properties</format>
                     <includeOnlyProperties>
                         <includeOnlyProperty>^git.branch$</includeOnlyProperty>
                         <includeOnlyProperty>^git.build.time$</includeOnlyProperty>
