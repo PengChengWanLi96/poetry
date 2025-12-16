@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>古诗词展示</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 50px;
+            background-image: url('https://img1.baidu.com/it/u=3048504006,2891096514&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 248, 220, 0.85);
+            z-index: -1;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 0 0 10px 10px;
+            position: relative;
+        }
+        
+        .current-time {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1rem;
+            color: #7f8c8d;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .search-section {
+            margin-bottom: 40px;
+            padding: 0 15px;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+        }
+        
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-box button {
+            border: none;
+            background: #3498db;
+            color: white;
+            padding: 0 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box button:hover {
+            background: #2980b9;
+        }
+        
+        .poetry-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .poetry-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .poetry-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2c3e50);
+        }
+        
+        .poetry-dynasty {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #3498db;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .poetry-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            position: relative;
+        }
+        
+        .poetry-title::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 2px;
+            background: #3498db;
+            margin: 15px auto;
+        }
+        
+        .poetry-author {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 35px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        
+        .poetry-content {
+            font-size: 1.4rem;
+            line-height: 2.8;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #34495e;
+            padding: 0 20px;
+        }
+        
+        .poetry-card:nth-child(even) .poetry-title::after {
+            background: #e74c3c;
+        }
+        
+        .poetry-card:nth-child(even)::before {
+            background: linear-gradient(90deg, #e74c3c, #f39c12);
+        }
+        
+        .poetry-card:nth-child(even) .poetry-dynasty {
+            color: #e74c3c;
+        }
+        
+        .container {
+            max-width: 900px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .poetry-title {
+                font-size: 1.8rem;
+            }
+            
+            .poetry-content {
+                font-size: 1.2rem;
+                line-height: 2.5;
+            }
+            
+            .search-box {
+                border-radius: 30px;
+            }
+            
+            .search-box input {
+                padding: 12px 20px;
+            }
+            
+            .search-box button {
+                padding: 0 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .header {
+                padding: 20px 0;
+                margin-bottom: 20px;
+            }
+            
+            .poetry-card {
+                padding: 30px 20px;
+                margin-bottom: 20px;
+            }
+            
+            .poetry-content {
+                font-size: 1.1rem;
+                line-height: 2.3;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="current-time" id="currentTime"></div>
+        <h1>古诗词欣赏</h1>
+    </div>
+    
+    <div class="container">
+        <!-- 搜索区域 -->
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="请输入诗词名称、作者或内容关键词">
+                <button type="button" id="searchBtn">搜索</button>
+            </div>
+        </div>
+        
+        <!-- 诗词展示区域 -->
+        <div id="poetryContainer">
+            <!-- 示例诗词 -->
+            <div class="poetry-card fade-in">
+                <div class="poetry-title">静夜思</div>
+                <div class="poetry-dynasty">唐</div>
+                <div class="poetry-author">李白</div>
+                <div class="poetry-content">
+                    床前明月光，<br>
+                    疑是地上霜。<br>
+                    举头望明月，<br>
+                    低头思故乡。
+                </div>
+            </div>
+            
+            <div class="poetry-card fade-in">
+                <div class="poetry-title">春晓</div>
+                <div class="poetry-dynasty">唐</div>
+                <div class="poetry-author">孟浩然</div>
+                <div class="poetry-content">
+                    春眠不觉晓，<br>
+                    处处闻啼鸟。<br>
+                    夜来风雨声，<br>
+                    花落知多少。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // 更新时间显示
+            function updateTime() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                
+                const timeString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                $('#currentTime').text(timeString);
+            }
+            
+            // 初始更新时间
+            updateTime();
+            
+            // 每秒更新时间
+            setInterval(updateTime, 1000);
+            
+            // 搜索功能
+            $('#searchBtn').click(function() {
+                const keyword = $('#searchInput').val().trim();
+                if (keyword) {
+                    alert('在实际应用中，这里会向后端发送请求搜索相关诗词: ' + keyword);
+                    // 示例代码：
+                    // $.get('/api/poetry/search?keyword=' + keyword, function(data) {
+                    //     renderPoetryList(data);
+                    // });
+                }
+            });
+            
+            // 回车搜索
+            $('#searchInput').keypress(function(e) {
+                if (e.which === 13) {
+                    $('#searchBtn').click();
+                }
+            });
+            
+            // 渲染诗词列表的函数（示例）
+            function renderPoetryList(poetryList) {
+                const container = $('#poetryContainer');
+                container.empty();
+                
+                if (poetryList.length === 0) {
+                    container.append('<p class="text-center">未找到相关诗词</p>');
+                    return;
+                }
+                
+                poetryList.forEach(poetry => {
+                    const poetryCard = `
+                        <div class="poetry-card fade-in">
+                            <div class="poetry-title">${poetry.title}</div>
+                            <div class="poetry-dynasty">${poetry.dynasty || ''}</div>
+                            <div class="poetry-author">${poetry.author}</div>
+                            <div class="poetry-content">
+                                ${poetry.content.replace(/\n/g, '<br>')}
+                            </div>
+                        </div>
+                    `;
+                    container.append(poetryCard);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
