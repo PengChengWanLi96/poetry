@@ -43,6 +43,11 @@ public class UserExcelV1Controller {
         writer.renameSheet("用户信息");
 
 
+        // 设置sheet2
+        writer.setSheet("部门统计");
+        writer.write(userList, true);
+
+
 
         // 4. 配置响应
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
