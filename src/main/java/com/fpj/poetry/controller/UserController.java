@@ -1,5 +1,7 @@
 package com.fpj.poetry.controller;
 
+import com.fpj.poetry.annotation.AuditLog;
+import com.fpj.poetry.annotation.TimeCost;
 import com.fpj.poetry.domain.User;
 import com.fpj.poetry.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +34,8 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "创建用户", description = "创建一个新用户")
+    @AuditLog(module = "用户管理", operation = "创建用户")
+    @TimeCost(value = "创建用户耗时", unit = TimeUnit.MICROSECONDS)
     public String createUser(@Validated @RequestBody User user) {
         return userService.createUser(user);
     }
@@ -42,12 +47,16 @@ public class UserController {
             @Parameter(name = "name", description = "名称", required = false),
             @Parameter(name = "nickname", description = "昵称", required = false),
             @Parameter(name = "address", description = "地址", required = false)})
+    @AuditLog(module = "用户管理", operation = "查询用户列表")
+    @TimeCost(value = "查询用户列表耗时")
     public List<User> getUserList(User user) {
         return userService.getUserList(user);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "根据ID获取用户", description = "通过用户ID获取详细信息")
+    @TimeCost(value = "查询用户耗时")
+    @AuditLog(module = "用户管理", operation = "查询用户")
     public User getUserById(
             @Parameter(description = "用户ID", required = true, example = "u123")
             @PathVariable String id) {
@@ -56,6 +65,8 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "根据ID删除用户", description = "通过用户ID删除用户")
+    @AuditLog(module = "用户管理", operation = "删除用户")
+    @TimeCost(value = "删除用户耗时")
     public Boolean deleteUserById(
             @Parameter(description = "用户ID", required = true, example = "u123")
             @PathVariable String id) {
