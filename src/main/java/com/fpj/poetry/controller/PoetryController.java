@@ -25,7 +25,8 @@ public class PoetryController {
             @RequestParam(required = false) String keyword,
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
-        return Result.success(poetryService.getPoetryList(categoryId, keyword, page, size));
+        PageResult<Poetry> poetryList = poetryService.getPoetryList(categoryId, keyword, page, size);
+        return Result.success(poetryList);
     }
 
     @GetMapping("/{id}")
@@ -49,7 +50,8 @@ public class PoetryController {
             @RequestParam String keyword,
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
-        return Result.success(poetryService.searchPoetry(keyword, page, size));
+        PageResult<Poetry> poetryPageResult = poetryService.searchPoetry(keyword, page, size);
+        return Result.success(poetryPageResult);
     }
 
     @PostMapping
