@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>诗词大全 - 品味古典诗词之美</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D4A574;
+            --bg-color: #FDF8F3;
+            --text-color: #3D3D3D;
+            --accent-color: #C41E3A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.05) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.95), rgba(139, 69, 19, 0.8));
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(139, 69, 19, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 56px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto 60px;
+            position: relative;
+        }
+
+        .search-box {
+            display: flex;
+            background: #fff;
+            border-radius: 50px;
+            box-shadow: 0 8px 40px rgba(139, 69, 19, 0.15);
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 40px rgba(139, 69, 19, 0.25);
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 20px 30px;
+            border: none;
+            font-size: 18px;
+            outline: none;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .search-box button {
+            padding: 20px 40px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        .search-box button:hover {
+            background: #6B3410;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .category-tag {
+            padding: 10px 22px;
+            background: #fff;
+            border: 1px solid var(--secondary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: var(--primary-color);
+        }
+
+        .category-tag:hover, .category-tag.active {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 36px;
+            color: var(--primary-color);
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary-color);
+            margin: 15px auto 0;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .poetry-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poetry-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 80px;
+            color: rgba(139, 69, 19, 0.08);
+            font-family: 'Noto Serif SC', serif;
+            line-height: 1;
+        }
+
+        .poetry-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(139, 69, 19, 0.2);
+        }
+
+        .poetry-card .title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poetry-card .author {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poetry-card .content {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+            max-height: 80px;
+            overflow: hidden;
+        }
+
+        .poetry-card .dynasty {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 12px;
+            background: var(--secondary-color);
+            color: #fff;
+            border-radius: 15px;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .search-results {
+            display: none;
+            padding: 40px 0;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .results-header h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 28px;
+            color: var(--primary-color);
+        }
+
+        .results-header button {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .results-header button:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 30px 40px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.05), transparent);
+        }
+
+        .modal-header .title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .modal-header .author {
+            font-size: 16px;
+            color: #888;
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .modal-body .content {
+            font-size: 18px;
+            line-height: 2;
+            color: #333;
+            white-space: pre-wrap;
+            text-align: center;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .modal-tags {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .modal-tags span {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(139, 69, 19, 0.1);
+            color: var(--primary-color);
+            border-radius: 15px;
+            font-size: 13px;
+            margin: 5px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            color: #888;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #eee;
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        footer {
+            background: #2D2D2D;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 40px 0;
+        }
+
+        .pagination button {
+            padding: 10px 18px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-color);
+        }
+
+        .pagination button:hover, .pagination button.active {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .search-box {
+                flex-direction: column;
+                border-radius: 16px;
+            }
+
+            .search-box input, .search-box button {
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .search-box button {
+                padding: 15px;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .modal-content {
+                margin: 10px;
+                max-height: 90vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="/" class="logo">诗词大全</a>
+            <nav class="nav-links" id="nav-links">
+                <a href="#" onclick="showHome()">首页</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" id="main-content">
+        <section class="hero">
+            <h1>品味古典诗词之美</h1>
+            <p>寻访千年的诗意，感受中华文化的魅力</p>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="搜索诗词标题、作者或内容..." onkeypress="handleSearch(event)">
+                    <button onclick="performSearch()">搜索</button>
+                </div>
+            </div>
+
+            <div class="categories" id="categories">
+                <span class="category-tag active" onclick="filterByCategory(null)">全部</span>
+            </div>
+        </section>
+
+        <section id="featured-section">
+            <div class="section-title">
+                <h2>精选诗词</h2>
+            </div>
+            <div class="featured-grid" id="poetry-grid">
+            </div>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>加载中...</p>
+            </div>
+            <div class="pagination" id="pagination"></div>
+        </section>
+
+        <section class="search-results" id="search-results">
+            <div class="results-header">
+                <h2>搜索结果</h2>
+                <button onclick="showHome()">返回首页</button>
+            </div>
+            <div class="featured-grid" id="results-grid"></div>
+            <div class="pagination" id="results-pagination"></div>
+        </section>
+    </main>
+
+    <div class="modal" id="poetry-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-header">
+                <h2 class="title" id="modal-title"></h2>
+                <p class="author" id="modal-author"></p>
+            </div>
+            <div class="modal-body">
+                <div class="content" id="modal-content"></div>
+                <div class="modal-tags" id="modal-tags"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 诗词大全 - 传承中华文化</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = '/api/poetry';
+        let currentCategory = null;
+        let currentPage = 1;
+        let categoriesData = [];
+        let isSearchMode = false;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadCategories();
+            loadFeaturedPoetry();
+        });
+
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_BASE}/categories`);
+                const result = await response.json();
+                if (result.code === 200) {
+                    categoriesData = result.data;
+                    renderCategories();
+                }
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categories');
+            const navContainer = document.getElementById('nav-links');
+            
+            let html = '<span class="category-tag active" onclick="filterByCategory(null)">全部</span>';
+            let navHtml = '<a href="#" onclick="showHome()">首页</a>';
+            
+            categoriesData.forEach(cat => {
+                html += `<span class="category-tag" onclick="filterByCategory(${cat.id})">${cat.name}</span>`;
+                navHtml += `<a href="#" onclick="filterByCategory(${cat.id})">${cat.name}</a>`;
+            });
+            
+            container.innerHTML = html;
+            navContainer.innerHTML = navHtml;
+        }
+
+        async function loadFeaturedPoetry() {
+            showLoading(true);
+            try {
+                const response = await fetch(`${API_BASE}/featured?page=1&size=12`);
+                const result = await response.json();
+                if (result.code === 200) {
+                    renderPoetryGrid(result.data.records, 'poetry-grid');
+                    renderPagination(result.data, 'pagination', 'loadFeaturedPoetry');
+                }
+            } catch (error) {
+                console.error('Error loading poetry:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function renderPoetryGrid(poetries, containerId) {
+            const container = document.getElementById(containerId);
+            if (!poetries || poetries.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #888; grid-column: 1/-1;">暂无诗词</p>';
+                return;
+            }
+
+            container.innerHTML = poetries.map(poetry => `
+                <div class="poetry-card" onclick="viewPoetry(${poetry.id})">
+                    <span class="dynasty">${poetry.dynasty || ''}</span>
+                    <h3 class="title">${poetry.title}</h3>
+                    <p class="author">${poetry.author || '无名'}</p>
+                    <p class="content">${poetry.content ? poetry.content.substring(0, 60) : ''}...</p>
+                </div>
+            `).join('');
+        }
+
+        function renderPagination(data, containerId, loadFunction) {
+            const container = document.getElementById(containerId);
+            const totalPages = Math.ceil(data.total / data.size);
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = `<button onclick="${loadFunction}('${data.current - 1}')" ${data.current <= 1 ? 'disabled' : ''}>上一页</button>`;
+            
+            for (let i = 1; i <= totalPages && i <= 5; i++) {
+                html += `<button class="${data.current === i ? 'active' : ''}" onclick="${loadFunction}('${i}')">${i}</button>`;
+            }
+            
+            html += `<button onclick="${loadFunction}('${data.current + 1}')" ${data.current >= totalPages ? 'disabled' : ''}>下一页</button>`;
+            
+            container.innerHTML = html;
+        }
+
+        async function viewPoetry(id) {
+            try {
+                const response = await fetch(`${API_BASE}/${id}`);
+                const result = await response.json();
+                if (result.code === 200) {
+                    showPoetryModal(result.data.poetry);
+                }
+            } catch (error) {
+                console.error('Error loading poetry detail:', error);
+            }
+        }
+
+        function showPoetryModal(poetry) {
+            document.getElementById('modal-title').textContent = poetry.title;
+            document.getElementById('modal-author').textContent = `${poetry.dynasty || ''} · ${poetry.author || '无名'}`;
+            document.getElementById('modal-content').textContent = poetry.content;
+            
+            const tags = JSON.parse(poetry.tags || '[]');
+            document.getElementById('modal-tags').innerHTML = tags.map(tag => `<span>${tag}</span>`).join('');
+            
+            document.getElementById('poetry-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('poetry-modal').classList.remove('active');
+        }
+
+        function filterByCategory(categoryId) {
+            currentCategory = categoryId;
+            isSearchMode = false;
+            
+            document.querySelectorAll('.category-tag').forEach((tag, index) => {
+                if (categoryId === null && index === 0) {
+                    tag.classList.add('active');
+                } else if (categoryId !== null) {
+                    const cat = categoriesData[categoryId - 1];
+                    if (cat && tag.textContent === cat.name) {
+                        tag.classList.add('active');
+                    } else {
+                        tag.classList.remove('active');
+                    }
+                } else {
+                    tag.classList.remove('active');
+                }
+            });
+
+            loadPoetryList(categoryId, null, 1);
+        }
+
+        async function loadPoetryList(categoryId, keyword, page) {
+            showLoading(true);
+            document.getElementById('featured-section').style.display = 'block';
+            document.getElementById('search-results').classList.remove('active');
+
+            try {
+                let url = `${API_BASE}/list?page=${page}&size=12`;
+                if (categoryId) url += `&categoryId=${categoryId}`;
+                if (keyword) url += `&keyword=${encodeURIComponent(keyword)}`;
+
+                const response = await fetch(url);
+                const result = await response.json();
+                if (result.code === 200) {
+                    renderPoetryGrid(result.data.records, 'poetry-grid');
+                    
+                    const pageNum = page || 1;
+                    const paginationFunc = keyword ? `searchPoetry('${encodeURIComponent(keyword)}',` : `loadPoetryList(${categoryId || 'null'}, null, `;
+                    renderPaginationWithCallback(result.data, 'pagination', paginationFunc, pageNum);
+                }
+            } catch (error) {
+                console.error('Error loading poetry list:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function renderPaginationWithCallback(data, containerId, callbackPrefix, currentPageNum) {
+            const container = document.getElementById(containerId);
+            const totalPages = Math.ceil(data.total / data.size);
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = `<button onclick="${callbackPrefix}${currentPageNum - 1})" ${currentPageNum <= 1 ? 'disabled' : ''}>上一页</button>`;
+            
+            for (let i = 1; i <= totalPages && i <= 5; i++) {
+                html += `<button class="${currentPageNum === i ? 'active' : ''}" onclick="${callbackPrefix}${i})">${i}</button>`;
+            }
+            
+            html += `<button onclick="${callbackPrefix}${currentPageNum + 1})" ${currentPageNum >= totalPages ? 'disabled' : ''}>下一页</button>`;
+            
+            container.innerHTML = html;
+        }
+
+        function performSearch() {
+            const keyword = document.getElementById('search-input').value.trim();
+            if (!keyword) return;
+            
+            isSearchMode = true;
+            searchPoetry(keyword, 1);
+        }
+
+        async function searchPoetry(keyword, page) {
+            showLoading(true);
+            document.getElementById('featured-section').style.display = 'none';
+            document.getElementById('search-results').classList.add('active');
+
+            try {
+                const response = await fetch(`${API_BASE}/search?keyword=${encodeURIComponent(keyword)}&page=${page}&size=12`);
+                const result = await response.json();
+                if (result.code === 200) {
+                    document.querySelector('#search-results .results-header h2').textContent = `搜索"${keyword}"的结果`;
+                    renderPoetryGrid(result.data.records, 'results-grid');
+                    renderPaginationWithCallback(result.data, 'results-pagination', `searchPoetry('${encodeURIComponent(keyword)}',`, page);
+                }
+            } catch (error) {
+                console.error('Error searching poetry:', error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        }
+
+        function showHome() {
+            isSearchMode = false;
+            currentCategory = null;
+            document.getElementById('search-input').value = '';
+            document.getElementById('featured-section').style.display = 'block';
+            document.getElementById('search-results').classList.remove('active');
+            
+            document.querySelectorAll('.category-tag').forEach((tag, index) => {
+                tag.classList.toggle('active', index === 0);
+            });
+
+            loadFeaturedPoetry();
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').classList.toggle('active', show);
+        }
+
+        document.getElementById('poetry-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'poetry-modal') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
