@@ -29,6 +29,5 @@ public class PoetryCategory implements Serializable {
 
     private LocalDateTime updatedAt;
 
-    @TableLogic
     private LocalDateTime deletedAt;
 }

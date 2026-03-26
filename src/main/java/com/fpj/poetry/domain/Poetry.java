@@ -41,7 +41,6 @@ public class Poetry implements Serializable {
 
     private LocalDateTime updatedAt;
 
-    @TableLogic
     private LocalDateTime deletedAt;
 
     @TableField(exist = false)
