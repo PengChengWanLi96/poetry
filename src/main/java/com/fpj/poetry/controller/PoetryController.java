@@ -39,7 +39,8 @@ public class PoetryController {
     public Result<PageResult<Poetry>> getFeaturedPoetry(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
-        return Result.success(poetryService.getFeaturedPoetry(page, size));
+        PageResult<Poetry> featuredPoetry = poetryService.getFeaturedPoetry(page, size);
+        return Result.success(featuredPoetry);
     }
 
     @GetMapping("/search")

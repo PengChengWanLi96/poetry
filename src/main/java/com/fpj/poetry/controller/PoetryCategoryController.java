@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/poetry/category")
+@RequestMapping("/api/poetry/categories")
 @Tag(name = "诗词分类管理", description = "诗词分类相关接口")
 public class PoetryCategoryController {
 
     @Autowired
     private PoetryCategoryService categoryService;
 
-    @GetMapping("/list")
+    @GetMapping("")
     @Operation(summary = "获取所有分类")
     public Result<List<PoetryCategory>> getAllCategories() {
         return Result.success(categoryService.getAllCategories());
