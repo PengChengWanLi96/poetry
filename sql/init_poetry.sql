@@ -1,0 +1,32 @@
+-- 数据导入说明
+-- 由于数据量较大（约40万条），建议使用以下方式导入：
+--
+-- 方式1: 命令行导入
+-- mysql -u root -p poetry < src/main/resources/sql/schema.sql
+-- mysql -u root -p poetry < src/main/resources/sql/data.sql
+-- for f in src/main/resources/sql/data_*.sql; do mysql -u root -p poetry < "$f"; done
+--
+-- 方式2: 分批导入
+-- 由于SQL文件较大，建议使用 source 命令分批导入：
+-- mysql -u root -p
+-- use poetry;
+-- source classpath:sql/schema.sql;
+-- source classpath:sql/data.sql;
+-- source classpath:sql/data_1.sql;
+-- ...
+
+-- 数据统计：
+-- 唐诗: ~107,891 首
+-- 宋词: ~275,581 首  
+-- 元曲: ~11,057 首
+-- 诗经: 305 首
+-- 楚辞: ~258 首
+-- 论语: ~65 首
+-- 四书五经: ~226 首
+-- 千家诗: ~226 首
+-- 纳兰性德: ~16 首
+-- 曹操诗集: ~26 首
+-- 幽梦影: ~219 首
+-- 蒙学: ~36 首
+-- 五代的词: ~542 首
+-- 总计: ~396,242 首
