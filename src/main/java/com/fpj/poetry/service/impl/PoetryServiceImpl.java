@@ -28,7 +28,9 @@ public class PoetryServiceImpl extends ServiceImpl<PoetryRepository, Poetry> imp
 
     @Override
     public IPage<Poetry> getPoetryPage(Long categoryId, String keyword, Integer page, Integer size) {
-        Page<Poetry> pageParam = new Page<>(page, size);
+        int currentPage = (page != null && page > 0) ? page : 1;
+        int pageSize = (size != null && size > 0) ? size : 10;
+        Page<Poetry> pageParam = new Page<>(currentPage, pageSize);
         
         LambdaQueryWrapper<Poetry> wrapper = new LambdaQueryWrapper<>();
         
