@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>诗词大全 - 品味古典诗词之美</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Custom KaiTi';
+            src: local('KaiTi'), local('STKaiti'), local('AR PL UKai CN'), local('SimSun');
+        }
+
+        @font-face {
+            font-family: 'Custom SongTi';
+            src: local('Songti SC'), local('SimSun'), local('STSong');
+        }
+
         :root {
             --primary-color: #8B4513;
             --secondary-color: #D4A574;
@@ -21,7 +30,7 @@
         }
 
         body {
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", "SimSun", sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             min-height: 100vh;
@@ -52,7 +61,7 @@
         }
 
         .logo {
-            font-family: 'Noto Serif SC', serif;
+            font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", serif;
             font-size: 28px;
             font-weight: 700;
             color: #fff;
@@ -95,7 +104,7 @@
         }
 
         .hero h1 {
-            font-family: 'Noto Serif SC', serif;
+            font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", serif;
             font-size: 56px;
             color: var(--primary-color);
             margin-bottom: 20px;
@@ -136,7 +145,7 @@
             border: none;
             font-size: 18px;
             outline: none;
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", sans-serif;
         }
 
         .search-box button {
@@ -147,7 +156,7 @@
             font-size: 18px;
             cursor: pointer;
             transition: background 0.3s;
-            font-family: 'Noto Sans SC', sans-serif;
+            font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", sans-serif;
         }
 
         .search-box button:hover {
@@ -186,7 +195,7 @@
         }
 
         .section-title h2 {
-            font-family: 'Noto Serif SC', serif;
+            font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", serif;
             font-size: 36px;
             color: var(--primary-color);
             display: inline-block;
@@ -226,7 +235,7 @@
             left: 20px;
             font-size: 80px;
             color: rgba(139, 69, 19, 0.08);
-            font-family: 'Noto Serif SC', serif;
+            font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", serif;
             line-height: 1;
         }
 
@@ -236,7 +245,7 @@
         }
 
         .poetry-card .title {
-            font-family: 'Noto Serif SC', serif;
+            font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", serif;
             font-size: 22px;
             color: var(--primary-color);
             margin-bottom: 10px;
@@ -292,7 +301,7 @@
         }
 
         .results-header h2 {
-            font-family: 'Noto Serif SC', serif;
+            font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", serif;
             font-size: 28px;
             color: var(--primary-color);
         }
@@ -310,114 +319,6 @@
         .results-header button:hover {
             background: var(--primary-color);
             color: #fff;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #fff;
-            border-radius: 20px;
-            max-width: 700px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            animation: modalSlide 0.3s ease;
-        }
-
-        @keyframes modalSlide {
-            from {
-                transform: translateY(-30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            padding: 30px 40px;
-            border-bottom: 1px solid #eee;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(139, 69, 19, 0.05), transparent);
-        }
-
-        .modal-header .title {
-            font-family: 'Noto Serif SC', serif;
-            font-size: 32px;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .modal-header .author {
-            font-size: 16px;
-            color: #888;
-        }
-
-        .modal-body {
-            padding: 40px;
-        }
-
-        .modal-body .content {
-            font-size: 18px;
-            line-height: 2;
-            color: #333;
-            white-space: pre-wrap;
-            text-align: center;
-            font-family: 'Noto Serif SC', serif;
-        }
-
-        .modal-tags {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-
-        .modal-tags span {
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(139, 69, 19, 0.1);
-            color: var(--primary-color);
-            border-radius: 15px;
-            font-size: 13px;
-            margin: 5px;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 24px;
-            color: #888;
-            transition: all 0.3s;
-        }
-
-        .modal-close:hover {
-            background: rgba(0, 0, 0, 0.1);
-            color: #333;
         }
 
         .loading {
@@ -512,11 +413,6 @@
                 flex-direction: column;
                 gap: 15px;
             }
-
-            .modal-content {
-                margin: 10px;
-                max-height: 90vh;
-            }
         }
     </style>
 </head>
@@ -570,23 +466,11 @@
         </section>
     </main>
 
-    <div class="modal" id="poetry-modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            <div class="modal-header">
-                <h2 class="title" id="modal-title"></h2>
-                <p class="author" id="modal-author"></p>
-            </div>
-            <div class="modal-body">
-                <div class="content" id="modal-content"></div>
-                <div class="modal-tags" id="modal-tags"></div>
-            </div>
-        </div>
-    </div>
+
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 诗词大全 - 传承中华文化</p>
+            <p>&copy; 2026 诗词大全 - 传承中华文化 来源 鹏程万里</p>
         </div>
     </footer>
 
@@ -684,31 +568,8 @@
             container.innerHTML = html;
         }
 
-        async function viewPoetry(id) {
-            try {
-                const response = await fetch(`${API_BASE}/${id}`);
-                const result = await response.json();
-                if (result.code === 200) {
-                    showPoetryModal(result.data.poetry);
-                }
-            } catch (error) {
-                console.error('Error loading poetry detail:', error);
-            }
-        }
-
-        function showPoetryModal(poetry) {
-            document.getElementById('modal-title').textContent = poetry.title;
-            document.getElementById('modal-author').textContent = `${poetry.dynasty || ''} · ${poetry.author || '无名'}`;
-            document.getElementById('modal-content').textContent = poetry.content;
-            
-            const tags = JSON.parse(poetry.tags || '[]');
-            document.getElementById('modal-tags').innerHTML = tags.map(tag => `<span>${tag}</span>`).join('');
-            
-            document.getElementById('poetry-modal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('poetry-modal').classList.remove('active');
+        function viewPoetry(id) {
+            window.location.href = `/poetry-detail.html?id=${id}`;
         }
 
         function filterByCategory(categoryId) {
@@ -831,11 +692,6 @@
             document.getElementById('loading').classList.toggle('active', show);
         }
 
-        document.getElementById('poetry-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'poetry-modal') {
-                closeModal();
-            }
-        });
     </script>
 </body>
 </html>
