@@ -496,8 +496,8 @@
                 const response = await fetch(`${API_BASE}/${id}`);
                 const result = await response.json();
                 
-                if (result.code === 200 && result.data && result.data.poetry) {
-                    displayPoetry(result.data.poetry);
+                if (result.code === 200 && result.data) {
+                    displayPoetry(result.data);
                 } else {
                     showError(result.message || '诗词不存在');
                 }
