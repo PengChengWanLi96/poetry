@@ -33,7 +33,6 @@ public class PoetryServiceImpl extends ServiceImpl<PoetryRepository, Poetry> imp
         Page<Poetry> pageParam = new Page<>(currentPage, pageSize);
         
         LambdaQueryWrapper<Poetry> wrapper = new LambdaQueryWrapper<>();
-        wrapper.between(Poetry::getId, 1L, 20L);
         if (categoryId != null && categoryId > 0) {
             wrapper.eq(Poetry::getCategoryId, categoryId);
         }
