@@ -1,10 +1,9 @@
 package com.fpj.poetry.controller;
 
 import com.fpj.poetry.annotation.TimeCost;
+import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.concurrent.TimeUnit;
 
 @Controller
 public class IndexController {

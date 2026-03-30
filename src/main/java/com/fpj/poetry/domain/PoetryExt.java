@@ -1,11 +1,12 @@
 package com.fpj.poetry.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.Data;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import lombok.Data;
 
 @Data
 @TableName("poetry_ext")
