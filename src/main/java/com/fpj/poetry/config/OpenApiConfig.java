@@ -42,7 +42,7 @@ public class OpenApiConfig {
         log.info("swagger doc url: {}", swaggerUrl);
         log.info("openAPI doc url: {}", openApiUrl);
         log.info("knife4j doc url: {}", knife4jUrl);
-        List.of(11,22);
+        log.info("service http url: {}", String.format("http://%s:%s", serverIp, port));
     }
 
     // 自定义安全方案（如 JWT）
