@@ -196,6 +196,7 @@ public class WeatherServiceImpl implements WeatherService {
                 double lat = Double.parseDouble(parts[0]);
                 double lon = Double.parseDouble(parts[1]);
                 if (Math.abs(lat - latitude) < 0.5 && Math.abs(lon - longitude) < 0.5) {
+                    cityCache.put(roundedKey, entry.getValue());
                     return entry.getValue();
                 }
             }
