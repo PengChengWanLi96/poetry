@@ -1,4 +1,42 @@
-### 用户列表
-GET http://{{server_port}}/users
-#Accept: application/json
-Authorization: Basic {{es_basic_auth}}
+### 获取诗词列表
+GET http://{{server_port}}/api/poetry/list?page=1&size=10
+
+### 获取诗词列表-按分类
+GET http://{{server_port}}/api/poetry/list?categoryId=1&page=1&size=10
+
+### 获取诗词详情
+GET http://{{server_port}}/api/poetry/1
+
+### 获取精选诗词
+GET http://{{server_port}}/api/poetry/featured?page=1&size=12
+
+### 搜索诗词
+GET http://{{server_port}}/api/poetry/search?keyword=静夜思&page=1&size=10
+
+### 创建诗词
+POST http://{{server_port}}/api/poetry
+Content-Type: application/json
+
+{
+  "title": "测试诗词",
+  "author": "测试作者",
+  "dynasty": "唐代",
+  "content": "床前明月光，疑是地上霜。",
+  "categoryId": 1,
+  "featured": true
+}
+
+### 更新诗词
+PUT http://{{server_port}}/api/poetry
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "静夜思-更新",
+  "author": "李白",
+  "dynasty": "唐代",
+  "content": "床前明月光，疑是地上霜。举头望明月，低头思故乡。"
+}
+
+### 删除诗词
+DELETE http://{{server_port}}/api/poetry/1

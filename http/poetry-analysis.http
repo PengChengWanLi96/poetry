@@ -1,0 +1,17 @@
+### 检查AI诗词分析是否启用
+GET http://{{server_port}}/api/poetry/analysis/check_enable
+
+### 获取诗词分析结果
+GET http://{{server_port}}/api/poetry/analysis/1
+
+### 检查诗词分析是否存在
+GET http://{{server_port}}/api/poetry/analysis/1/exists
+
+### 生成诗词分析
+POST http://{{server_port}}/api/poetry/analysis/1
+
+### 重新生成诗词分析
+POST http://{{server_port}}/api/poetry/analysis/1/regenerate
+
+### 删除诗词分析
+DELETE http://{{server_port}}/api/poetry/analysis/1

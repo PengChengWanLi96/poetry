@@ -1,0 +1,32 @@
+### 获取所有分类
+GET http://{{server_port}}/api/poetry/categories
+
+### 获取分类统计
+GET http://{{server_port}}/api/poetry/categories/stats
+
+### 根据code获取分类
+GET http://{{server_port}}/api/poetry/categories/tang
+
+### 创建分类
+POST http://{{server_port}}/api/poetry/categories
+Content-Type: application/json
+
+{
+  "name": "测试分类",
+  "code": "test",
+  "description": "测试用分类"
+}
+
+### 更新分类
+PUT http://{{server_port}}/api/poetry/categories
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "测试分类-更新",
+  "code": "test",
+  "description": "测试用分类-更新"
+}
+
+### 删除分类
+DELETE http://{{server_port}}/api/poetry/categories/1
