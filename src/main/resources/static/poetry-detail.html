@@ -809,7 +809,7 @@
 
                 <div id="content-section" class="analysis-section" style="display: none;">
                     <div class="analysis-section-title">诗词大意</div>
-                    <div class="analysis-section-content" id="content-analysis"></div>
+                    <div class="analysis-section-content" id="content-content"></div>
                 </div>
 
                 <div id="artistic-section" class="analysis-section" style="display: none;">
@@ -929,6 +929,13 @@
                             setTimeout(checkAnalysisComplete, 3000);
                             return;
                         }
+                        // 如果分析失败
+                        else if (analysis.status === 2) {
+                            showAnalysisState('analysis-info');
+                            showError('AI解析失败，请重试');
+                            btn.style.display = aiEnabled ? 'inline-flex' : 'none';
+                            return;
+                        }
                     }
                 }
             } catch (error) {
@@ -956,6 +963,12 @@
                         } else if (analysis.status === 0) {
                             // 仍在生成中，继续轮询
                             setTimeout(checkAnalysisComplete, 3000);
+                            return;
+                        } else if (analysis.status === 2) {
+                            // 分析失败
+                            showAnalysisState('analysis-info');
+                            showError('AI解析失败，请重试');
+                            document.getElementById('btn-analyze').style.display = aiEnabled ? 'inline-flex' : 'none';
                             return;
                         }
                     }
@@ -1075,7 +1088,7 @@
             fillAnalysisSection('dynasty', analysis.dynastyAnalysis);
             fillAnalysisSection('author', analysis.authorAnalysis);
             fillAnalysisSection('background', analysis.backgroundAnalysis);
-            fillAnalysisSection('content-analysis', analysis.contentAnalysis);
+            fillAnalysisSection('content', analysis.contentAnalysis);
             fillAnalysisSection('artistic', analysis.artisticAnalysis);
 
             // 更新元信息

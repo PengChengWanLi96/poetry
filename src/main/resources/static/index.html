@@ -60,6 +60,27 @@
             align-items: center;
         }
 
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .date-widget {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .date-icon {
+            font-size: 14px;
+        }
+
         .logo {
             font-family: "Custom SongTi", "Source Han Serif SC", "Songti SC", serif;
             font-size: 28px;
@@ -72,6 +93,7 @@
         .nav-links {
             display: flex;
             gap: 30px;
+            align-items: center;
         }
 
         .nav-links a {
@@ -83,6 +105,42 @@
 
         .nav-links a:hover {
             color: #FFD700;
+        }
+
+        .weather-widget {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .weather-widget:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .weather-icon {
+            font-size: 18px;
+        }
+
+        .weather-temp {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .weather-city {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .weather-loading {
+            font-size: 12px;
+            opacity: 0.8;
         }
 
         .hero {
@@ -420,9 +478,18 @@
     <header>
         <div class="container header-content">
             <a href="/" class="logo">诗词大全</a>
-            <nav class="nav-links" id="nav-links">
-                <a href="#" onclick="showHome()">首页</a>
-            </nav>
+            <div class="header-right">
+                <nav class="nav-links" id="nav-links">
+                    <a href="#" onclick="showHome()">首页</a>
+                </nav>
+                <div class="date-widget" id="date-widget">
+                    <span class="date-icon">📅</span>
+                    <span id="current-date"></span>
+                </div>
+                <div class="weather-widget" id="weather-widget" onclick="openWeatherPage()">
+                    <span class="weather-loading" id="weather-loading">加载天气...</span>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -482,9 +549,124 @@
         let isSearchMode = false;
 
         document.addEventListener('DOMContentLoaded', async () => {
+            initDate();
             await loadCategories();
             loadFeaturedPoetry();
+            loadWeather();
         });
+
+        function initDate() {
+            const dateEl = document.getElementById('current-date');
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const weekDays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+            const weekDay = weekDays[now.getDay()];
+            dateEl.textContent = `${year}-${month}-${day} ${weekDay}`;
+        }
+
+        async function loadWeather() {
+            const widget = document.getElementById('weather-widget');
+            
+            try {
+                const { latitude, longitude } = await getUserLocation();
+                console.log('User location:', latitude, longitude);
+                
+                const response = await fetch(`/api/weather/current?lat=${latitude}&lon=${longitude}`);
+                console.log('Weather API response status:', response.status);
+                
+                const result = await response.json();
+                console.log('Weather API result:', result);
+                
+                if (result.code === 200 && result.data) {
+                    const weather = result.data;
+                    widget.innerHTML = `
+                        <span class="weather-icon">${getWeatherEmoji(weather.weatherCode)}</span>
+                        <span class="weather-temp">${Math.round(weather.temperature)}°C</span>
+                        <span class="weather-city">${weather.cityName}</span>
+                    `;
+                    widget.dataset.lat = latitude;
+                    widget.dataset.lon = longitude;
+                    widget.dataset.city = weather.cityName;
+                }
+            } catch (error) {
+                console.error('Failed to load weather:', error);
+                loadWeatherWithDefault();
+            }
+        }
+
+        async function loadWeatherWithDefault() {
+            const widget = document.getElementById('weather-widget');
+            try {
+                const response = await fetch('/api/weather/current?lat=22.5431&lon=114.0579');
+                const result = await response.json();
+                
+                if (result.code === 200 && result.data) {
+                    const weather = result.data;
+                    widget.innerHTML = `
+                        <span class="weather-icon">${getWeatherEmoji(weather.weatherCode)}</span>
+                        <span class="weather-temp">${Math.round(weather.temperature)}°C</span>
+                        <span class="weather-city">${weather.cityName}</span>
+                    `;
+                    widget.dataset.lat = 22.5431;
+                    widget.dataset.lon = 114.0579;
+                    widget.dataset.city = weather.cityName;
+                }
+            } catch (e) {
+                console.error('Failed to load default weather:', e);
+                widget.innerHTML = `
+                    <span class="weather-icon">☁️</span>
+                    <span class="weather-city">天气加载失败</span>
+                `;
+            }
+        }
+
+        function getUserLocation() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    console.log('Geolocation not supported, using default (Shenzhen)');
+                    resolve({ latitude: 22.5431, longitude: 114.0579 });
+                    return;
+                }
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        resolve({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        });
+                    },
+                    (error) => {
+                        console.warn('Geolocation error:', error.message, 'using default (Shenzhen)');
+                        resolve({ latitude: 22.5431, longitude: 114.0579 });
+                    },
+                    { timeout: 5000, enableHighAccuracy: false }
+                );
+            });
+        }
+
+        function getWeatherEmoji(code) {
+            const codeNum = parseInt(code);
+            if (codeNum === 0) return '☀️';
+            if (codeNum <= 3) return '⛅';
+            if (codeNum <= 48) return '🌫️';
+            if (codeNum <= 57) return '🌧️';
+            if (codeNum <= 67) return '🌧️';
+            if (codeNum <= 77) return '❄️';
+            if (codeNum <= 82) return '🌧️';
+            if (codeNum <= 86) return '🌨️';
+            if (codeNum >= 95) return '⛈️';
+            return '🌤️';
+        }
+
+        function openWeatherPage() {
+            const widget = document.getElementById('weather-widget');
+            const lat = widget.dataset.lat || 22.5431;
+            const lon = widget.dataset.lon || 114.0579;
+            const city = widget.dataset.city || '深圳';
+            window.open(`/weather.html?lat=${lat}&lon=${lon}&city=${encodeURIComponent(city)}`, '_blank');
+        }
 
         async function loadCategories() {
             try {
