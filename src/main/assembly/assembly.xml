@@ -36,6 +36,14 @@
       </includes>
     </fileSet>
     <fileSet>
+      <directory>${basedir}/docs</directory>
+      <outputDirectory>docs</outputDirectory>
+      <fileMode>0644</fileMode>
+      <includes>
+         <include>**</include>
+      </includes>
+    </fileSet>
+    <fileSet>
       <directory>${basedir}/target</directory>
       <outputDirectory>boot</outputDirectory>
       <fileMode>0755</fileMode>
