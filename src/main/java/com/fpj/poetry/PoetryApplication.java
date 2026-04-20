@@ -1,6 +1,7 @@
 package com.fpj.poetry;
 
 import com.fpj.poetry.config.AiConfig;
+import com.fpj.poetry.config.VersionConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +14,10 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableConfigurationProperties(AiConfig.class)
 public class PoetryApplication {
 
+
     public static void main(String[] args) {
+        VersionConfig.printVersion(args);
+
         SpringApplication.run(PoetryApplication.class, args);
     }
 
