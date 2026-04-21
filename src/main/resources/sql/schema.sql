@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS poetry_category (
     sort_order INT DEFAULT 0 COMMENT '排序',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    deleted_at DATETIME DEFAULT NULL COMMENT '删除时间',
+    deleted_at TINYINT DEFAULT 0 COMMENT '删除标记(0-未删除,1-已删除)',
     INDEX idx_code (code),
     INDEX idx_sort_order (sort_order)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='诗词分类表';
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS poetry (
     is_featured TINYINT DEFAULT 0 COMMENT '是否推荐(0-否,1-是)',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    deleted_at DATETIME DEFAULT NULL COMMENT '删除时间',
+    deleted_at TINYINT DEFAULT 0 COMMENT '删除标记(0-未删除,1-已删除)',
     INDEX idx_category_id (category_id),
     INDEX idx_author (author),
     INDEX idx_title (title),
@@ -72,3 +72,35 @@ FROM poetry_category c
 LEFT JOIN poetry p ON c.id = p.category_id AND p.deleted_at IS NULL
 WHERE c.deleted_at IS NULL
 GROUP BY c.id, c.name, c.code;
+
+
+-- AI诗词分析表
+-- 用于存储每首诗词的AI分析结果
+-- 创建时间: 2025-03-30
+
+CREATE TABLE IF NOT EXISTS `poetry_analysis` (
+                                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `poetry_id` bigint(20) NOT NULL COMMENT '诗词ID',
+    `dynasty_analysis` text COMMENT '朝代背景分析',
+    `author_analysis` text COMMENT '作者背景分析',
+    `background_analysis` text COMMENT '诗词创作背景分析',
+    `content_analysis` text COMMENT '诗词大意分析',
+    `artistic_analysis` text COMMENT '艺术手法分析',
+    `full_analysis` text COMMENT '完整分析内容（JSON格式）',
+    `ai_model` varchar(50) DEFAULT NULL COMMENT '使用的AI模型',
+    `ai_version` varchar(50) DEFAULT NULL COMMENT 'AI模型版本',
+    `generate_time` int(11) DEFAULT '0' COMMENT '生成耗时(毫秒)',
+    `status` tinyint(1) DEFAULT '1' COMMENT '状态: 0-生成中, 1-已完成, 2-失败',
+    `error_msg` varchar(500) DEFAULT NULL COMMENT '错误信息',
+    `created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `idx_status` (`status`),
+    KEY `idx_created_at` (`created_at`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI诗词分析表';
+
+-- 添加外键约束（可选，根据业务需求决定是否添加）
+-- ALTER TABLE `poetry_analysis`
+-- ADD CONSTRAINT `fk_poetry_analysis_poetry`
+-- FOREIGN KEY (`poetry_id`) REFERENCES `poetry` (`id`)
+-- ON DELETE CASCADE ON UPDATE CASCADE;
