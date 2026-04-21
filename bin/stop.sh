@@ -4,7 +4,7 @@ PROGRESS=poetrya
 
 cd "$(dirname $0)"
 
-PROGRESS_PATH=${path}/boot/poetry-0.0.1-SNAPSHOT.jar
+PROGRESS_PATH=${path}/boot/poetry.jar
 
 PID=$(ps -ef | grep ${PROGRESS_PATH}  | grep -v grep | awk '{ print $2 }')
 if [ -z "$PID" ]
