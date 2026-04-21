@@ -1,3 +1,11 @@
+-- 创建数据库（如果不存在）
+CREATE DATABASE IF NOT EXISTS poetry
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+-- 切换到该数据库
+USE poetry;
+
 -- 诗词分类表
 CREATE TABLE IF NOT EXISTS poetry_category (
     id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
