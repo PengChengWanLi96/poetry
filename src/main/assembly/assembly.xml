@@ -58,7 +58,8 @@
       <includes>
           <include>schema.sql</include>
           <include>base_demo.sql</include>
-          <include>data.sql</include>      </includes>
+          <include>data.sql</include>
+      </includes>
     </fileSet>
     <fileSet>
       <directory>${basedir}/target</directory>
