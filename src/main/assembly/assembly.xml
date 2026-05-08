@@ -36,12 +36,29 @@
       </includes>
     </fileSet>
     <fileSet>
+      <directory>${basedir}/curl</directory>
+      <outputDirectory>curl</outputDirectory>
+      <fileMode>0755</fileMode>
+      <includes>
+          <include>**.sh</include>
+      </includes>
+    </fileSet>
+    <fileSet>
       <directory>${basedir}/docs</directory>
       <outputDirectory>docs</outputDirectory>
       <fileMode>0644</fileMode>
       <includes>
          <include>**</include>
       </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}/sql</directory>
+      <outputDirectory>sql</outputDirectory>
+      <fileMode>0644</fileMode>
+      <includes>
+          <include>schema.sql</include>
+          <include>base_demo.sql</include>
+          <include>data.sql</include>      </includes>
     </fileSet>
     <fileSet>
       <directory>${basedir}/target</directory>
