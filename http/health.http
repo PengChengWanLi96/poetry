@@ -1,0 +1,26 @@
+### 综合健康检查
+GET http://{{server_port}}/api/health
+
+### 服务状态
+GET http://{{server_port}}/api/health/status
+
+### 服务详细信息（进程ID、CPU、内存、线程等）
+GET http://{{server_port}}/api/health/info
+
+### 数据库健康检查
+GET http://{{server_port}}/api/health/db
+
+### 磁盘空间健康检查
+GET http://{{server_port}}/api/health/disk
+
+### 运行时间
+GET http://{{server_port}}/api/health/uptime
+
+### 内存使用情况
+GET http://{{server_port}}/api/health/memory
+
+### 线程信息
+GET http://{{server_port}}/api/health/threads
+
+### 环境信息
+GET http://{{server_port}}/api/health/env
