@@ -95,7 +95,7 @@ public class PoetryAnalysis implements Serializable {
     /**
      * 更新时间
      */
-    private LocalDateTime updatedAt;
+    private Integer updatedAt;
 
     /**
      * 关联的诗词对象（非数据库字段）

@@ -43,7 +43,7 @@ public class Poetry implements Serializable {
 
     private LocalDateTime updatedAt;
 
-    private LocalDateTime deletedAt;
+    private Integer deletedAt;
 
     @TableField(exist = false)
     private PoetryCategory category;

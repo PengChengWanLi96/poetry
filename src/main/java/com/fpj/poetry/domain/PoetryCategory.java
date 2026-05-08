@@ -30,5 +30,5 @@ public class PoetryCategory implements Serializable {
 
     private LocalDateTime updatedAt;
 
-    private LocalDateTime deletedAt;
+    private Integer deletedAt;
 }
